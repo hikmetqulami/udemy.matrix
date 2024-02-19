@@ -1,0 +1,24 @@
+    spring:
+      datasource:
+        username: postgres
+        password: root123
+        url: jdbc:postgresql://localhost:5432/udemy
+      jpa:
+        show-sql: true
+        hibernate:
+          ddl-auto: update
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+      mail:
+          host: smtp.gmail.com
+          port: 587
+          username: udemy.matrix@gmail.com
+          password: bvwllqonpouvmbea
+          protocol: smtp
+          properties:
+            mail:
+              smtp:
+                auth: true
+                starttls:
+                 enable: true
+
