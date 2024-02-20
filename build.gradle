@@ -13,35 +13,29 @@ java {
 
 repositories {
 	mavenCentral()
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		implementation 'org.freemarker:freemarker:2.3.31'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.projectlombok:lombok:1.18.28'
+		implementation 'org.projectlombok:lombok:1.18.28'
+		implementation 'org.jetbrains:annotations:24.0.0'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		runtimeOnly 'org.postgresql:postgresql'
+		compileOnly 'org.projectlombok:lombok:1.18.22'
+		annotationProcessor 'org.projectlombok:lombok:1.18.30'
+		implementation 'org.springframework.boot:spring-boot-starter-mail'
+		implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.2'
+		implementation 'org.mapstruct:mapstruct:1.5.0.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.0.Final'
+		implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+		runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+		runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+	}
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.freemarker:freemarker:2.3.31'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.projectlombok:lombok:1.18.28'
-	implementation 'org.projectlombok:lombok:1.18.28'
-	implementation 'org.jetbrains:annotations:24.0.0'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	runtimeOnly 'org.postgresql:postgresql'
-	compileOnly 'org.projectlombok:lombok:1.18.22'
-	annotationProcessor 'org.projectlombok:lombok:1.18.30'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.2'
-	implementation 'org.mapstruct:mapstruct:1.5.0.Final'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.0.Final'
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
-
-
-
-
-
-
-
-}
 
 tasks.named('test') {
 	useJUnitPlatform()

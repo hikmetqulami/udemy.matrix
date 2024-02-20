@@ -3,13 +3,12 @@ package com.UdemyProject.Udemy.controller;
 import com.UdemyProject.Udemy.dto.UserDto;
 import com.UdemyProject.Udemy.dto.UserPageResponse;
 import com.UdemyProject.Udemy.dto.request.RegisterRequest;
-import com.UdemyProject.Udemy.dto.response.RegisterResponse;
 import com.UdemyProject.Udemy.entity.User;
-import com.UdemyProject.Udemy.service.UserService;
 import com.UdemyProject.Udemy.service.serviceImp.UserServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +18,8 @@ public class UserController {
 
 
     private final UserServiceImpl userServiceImpl;
+
+    private final PasswordEncoder passwordEncoder;
 
 
     @GetMapping
@@ -51,48 +52,9 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public void register(@RequestBody RegisterRequest request) {
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void register(@RequestBody @Valid RegisterRequest request) {
         userServiceImpl.register(request);
     }
-
-
-    /*
-
-    @PostMapping("/register")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
-        Optional<User> existingUserOptional = userRepository.findUserByEmail(request.getEmail());
-        if (userRepository.existsByUsername(request.getEmail())) {
-            return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
-        }
-        User user = new User();
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode((request.getPassword())));
-
-
-        Role roles = roleRepository.findByName("USER").get();
-        user.setRoles(Collections.singletonList(roles));
-        userRepository.save(user);
-        user.setIsActive(false);
-
-        user.setActivationCode(UUID.randomUUID().toString());
-
-        if (!StringUtils.isEmpty(user.getEmail())) {
-            String username =user.getUsername() != null ? user.getUsername():"User";
-
-            String message = String.format(
-                    "Hello," + username +  "\n" +
-                            "Welcome to Udemy Demo Application. " +
-                            "Please, visit next link: http://localhost:8080/activate/" + user.getActivationCode(),
-                    user.getUsername()
-
-
-            );
-            mailService.send(user.getEmail(), "Activation code", message);
-        }
-        return new ResponseEntity<>("User registered success!", HttpStatus.OK);
-    }
-
-     */
 }
 

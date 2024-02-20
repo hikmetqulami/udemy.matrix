@@ -1,9 +1,8 @@
 package com.UdemyProject.Udemy.service;
 
-import com.UdemyProject.Udemy.dto.request.RegisterRequest;
 import com.UdemyProject.Udemy.dto.UserDto;
 import com.UdemyProject.Udemy.dto.UserPageResponse;
-import com.UdemyProject.Udemy.dto.response.RegisterResponse;
+import com.UdemyProject.Udemy.dto.request.RegisterRequest;
 import com.UdemyProject.Udemy.entity.User;
 
 public interface UserService {
@@ -19,12 +18,9 @@ public interface UserService {
 
     void delete(Long id);
 
-  User getUserByEmail(String email);
+    User getUserByEmail(String email);
 
-  void register(RegisterRequest request);
-//
-//    RegisterResponse register(RegisterRequest request);
-//
-//    void verify(String email,String otp);
+    void register(RegisterRequest request);
+
 
 }

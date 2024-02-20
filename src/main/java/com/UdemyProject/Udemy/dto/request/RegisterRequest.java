@@ -1,14 +1,19 @@
 package com.UdemyProject.Udemy.dto.request;
-import lombok.Builder;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import java.time.LocalDate;
-
 @Data
-@Builder
 public class RegisterRequest{
+
+
         private String username;
+
+        @Email
         private String email;
+
+        @Size(min = 8)
         private String password;
 
 }
