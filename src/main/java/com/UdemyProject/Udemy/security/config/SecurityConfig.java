@@ -29,7 +29,7 @@ public class SecurityConfig {
                 csrf(AbstractHttpConfigurer::disable)
                 .userDetailsService(userDetailsService)
                 .authorizeHttpRequests(req->req
-                        .requestMatchers(HttpMethod.POST,"api/users/register","/login/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"api/auth/**", "api/users/**").permitAll()
                         .anyRequest().authenticated());
         return http.build();
     }

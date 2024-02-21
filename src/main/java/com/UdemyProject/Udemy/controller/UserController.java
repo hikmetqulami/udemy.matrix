@@ -4,6 +4,7 @@ import com.UdemyProject.Udemy.dto.UserDto;
 import com.UdemyProject.Udemy.dto.UserPageResponse;
 import com.UdemyProject.Udemy.dto.request.RegisterRequest;
 import com.UdemyProject.Udemy.entity.User;
+import com.UdemyProject.Udemy.repository.UserRepository;
 import com.UdemyProject.Udemy.service.serviceImp.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -51,10 +52,10 @@ public class UserController {
     }
 
 
-    @PostMapping("/register")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public void register(@RequestBody @Valid RegisterRequest request) {
-        userServiceImpl.register(request);
-    }
+//    @PostMapping("/register")
+//    @ResponseStatus(code = HttpStatus.CREATED)
+//    public void register(@RequestBody @Valid RegisterRequest request) {
+//        userServiceImpl.register(request);
+//    }
 }
 
