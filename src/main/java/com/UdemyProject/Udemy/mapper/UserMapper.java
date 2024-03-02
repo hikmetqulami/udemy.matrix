@@ -5,6 +5,7 @@ import com.UdemyProject.Udemy.dto.request.RegisterRequest;
 import com.UdemyProject.Udemy.entity.User;
 import com.UdemyProject.Udemy.security.details.CustomUserDetails;
 import org.mapstruct.Mapper;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -18,3 +19,6 @@ public interface UserMapper {
     User toUserFromRegisterRequest(RegisterRequest request);
 
 }
+
+
+

@@ -3,17 +3,25 @@ package com.UdemyProject.Udemy.service.serviceImp;
 import com.UdemyProject.Udemy.dto.UserDto;
 import com.UdemyProject.Udemy.dto.UserPageResponse;
 import com.UdemyProject.Udemy.dto.request.RegisterRequest;
+import com.UdemyProject.Udemy.entity.Role;
 import com.UdemyProject.Udemy.entity.User;
 import com.UdemyProject.Udemy.exception.NotFoundException;
 import com.UdemyProject.Udemy.mapper.UserMapper;
+import com.UdemyProject.Udemy.repository.RoleRepository;
 import com.UdemyProject.Udemy.repository.UserRepository;
+import com.UdemyProject.Udemy.security.jwt.JWTGenerator;
 import com.UdemyProject.Udemy.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 @Slf4j
@@ -26,6 +34,12 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final AuthenticationManager authenticationManager;
+
+    private final JWTGenerator jwtGenerator;
+
+    private final RoleRepository roleRepository;
 
 
     @Override
@@ -56,12 +70,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto add(UserDto userDto) {
-        User user = userRepository.save(userMapper.toEntity(userDto));
-        return userMapper.toUserDto(user);
-    }
-
-    @Override
     public User update(User user) {
         log.info("User update successfully");
         return userRepository.save(user);
@@ -74,9 +82,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(RegisterRequest request) {
+
         User user = userMapper.toUserFromRegisterRequest(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        Role roles = roleRepository.findByName("USER").orElseThrow(() ->
+                new RuntimeException("Default role not found"));
+        user.setRoleList(Collections.singletonList(roles));
         userRepository.save(user);
     }
 
+    @Override
+    public String login(RegisterRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()));
+        UserDetails user = userMapper.toCustomUserDetails(getUserByEmail(request.getEmail()));
+        return jwtGenerator.generateToken(user);
+    }
 }

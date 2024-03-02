@@ -9,6 +9,7 @@ import com.UdemyProject.Udemy.service.serviceImp.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
-
     private final UserServiceImpl userServiceImpl;
 
-    private final PasswordEncoder passwordEncoder;
-
+    private final UserRepository userRepository;
 
     @GetMapping
     public UserPageResponse getAll(@RequestParam(value = "page") int page,
@@ -29,15 +28,26 @@ public class UserController {
         return userServiceImpl.getAll(page, count);
     }
 
+    @PostMapping("/register")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            return new ResponseEntity<>("User is taken", HttpStatus.BAD_REQUEST);
+        }
+        userServiceImpl.register(request);
+
+        return new ResponseEntity<>("User registered success!", HttpStatus.OK);
+
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody @Valid RegisterRequest request) {
+        return userServiceImpl.login(request);
+    }
+
     @GetMapping("/{id}")
     public UserDto findById(@PathVariable Long id) {
         return userServiceImpl.findById(id);
-    }
-
-    @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public void saveUser(@RequestBody UserDto user) {
-        userServiceImpl.add(user);
     }
 
     @PutMapping
@@ -51,11 +61,5 @@ public class UserController {
         userServiceImpl.delete(id);
     }
 
-
-//    @PostMapping("/register")
-//    @ResponseStatus(code = HttpStatus.CREATED)
-//    public void register(@RequestBody @Valid RegisterRequest request) {
-//        userServiceImpl.register(request);
-//    }
 }
 

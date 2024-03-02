@@ -12,7 +12,6 @@ public interface UserService {
 
     UserDto findById(Long id);
 
-    UserDto add(UserDto userDto);
 
     User update(User user);
 
@@ -21,6 +20,9 @@ public interface UserService {
     User getUserByEmail(String email);
 
     void register(RegisterRequest request);
+
+    String login(RegisterRequest request);
+
 
 
 }
