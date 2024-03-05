@@ -10,8 +10,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -21,6 +22,7 @@ public class UserController {
     private final UserServiceImpl userServiceImpl;
 
     private final UserRepository userRepository;
+
 
     @GetMapping
     public UserPageResponse getAll(@RequestParam(value = "page") int page,
@@ -51,8 +53,8 @@ public class UserController {
     }
 
     @PutMapping
-    public User update(@RequestBody User user) {
-        return userServiceImpl.update(user);
+    public User update(@RequestBody UserDto userDto) {
+        return userServiceImpl.update(userDto);
     }
 
     @DeleteMapping("/{id}")

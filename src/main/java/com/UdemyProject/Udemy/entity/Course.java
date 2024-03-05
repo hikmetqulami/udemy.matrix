@@ -10,11 +10,9 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "cousrses")
+@Table(name = "courses")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,23 +23,14 @@ public class Course {
     private Long id;
     private String title;
     private String description;
-
-    @Column(nullable = false, precision = 6, scale = 2)
-    @Min(1)
-    private BigDecimal price;
-
-    @Column(precision = 3, scale = 1, nullable = false)
-    @DecimalMax("5.0")
-    private BigDecimal rating;
-
+    private int rating;
     private String language;
-    private String author;
-    private LocalDateTime dateOfCreated;
-
-
-    @ColumnDefault(value = "FALSE")
-    @Column(nullable = false)
-    private Boolean isFeatured = false;
+    private String level;
+    private double price;
+    private LocalDateTime loadingTime;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 
 }

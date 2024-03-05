@@ -70,9 +70,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user) {
+    public User update(UserDto userDto) {
         log.info("User update successfully");
-        return userRepository.save(user);
+        return userRepository.save(userMapper.toEntity(userDto));
     }
 
     @Override

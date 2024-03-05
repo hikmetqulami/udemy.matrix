@@ -14,4 +14,11 @@ public interface CourseService {
     Course update(Course course);
 
     void delete(Long id);
+
+    List<Course> getAllCourses();
+    List<Course> filterCoursesByLevel(String level);
+    List<Course> filterCoursesByRating(int minRating);
+    List<Course> filterCoursesByLanguage(String language);
+    List<Course> filterCoursesByPrice(double maxPrice);
+
 }

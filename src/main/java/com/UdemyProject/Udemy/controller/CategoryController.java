@@ -1,14 +1,17 @@
 package com.UdemyProject.Udemy.controller;
 
 import com.UdemyProject.Udemy.entity.Category;
+import com.UdemyProject.Udemy.entity.Course;
 import com.UdemyProject.Udemy.service.serviceImp.CategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@RequestMapping("/category")
+
+@RequestMapping("api/category")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -37,4 +40,7 @@ public class CategoryController {
     public void delete(@PathVariable Long id) {
         categoryServiceImpl.delete(id);
     }
+//---------------------------------------------------------------------------
+
 }
+
